@@ -39,7 +39,7 @@ body.escuro{
 }
 
 body{
-    height: 100vh;
+    height: 100vh; 
     background: var(--bg-mobile) var(--bg-color);
     background-repeat: no-repeat;
     background-size: cover;
@@ -218,7 +218,7 @@ main{
 }
 
 .alternativas button{
-    padding: 16 px;
+    padding: 16px;
     border-radius: 12px;
     border: none;
     background: var(--purple);
