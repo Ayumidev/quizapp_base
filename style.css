@@ -119,6 +119,7 @@ main{
     font-size: 18px;
     font-weight: 500;
     color: var(--primary-text-color);
+    cursor: pointer;
 }
 
 .assuntos button div{
@@ -202,7 +203,7 @@ main{
 
     .assuntos button{
         font-size: 28px;
-        padding: 20px;
+        padding: 41px;
     }
 
     .assuntos button div{
