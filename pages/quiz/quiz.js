@@ -76,7 +76,7 @@ function montarPergunta() {
                     </div>
                 </label>
             </form>
-            <button>Enviar</button>
+            <button>Responder</button>
         </section>
     `
 }
@@ -93,6 +93,18 @@ const botaoEnviar = document.querySelector(".alternativas button")
 }
 
 function validarResposta(){
+    const botaoEnviar = document.querySelector(".alternativas button")
+    botaoEnviar.innerText = "Próxima"
+    botaoEnviar.removeEventListener("click", validarResposta)
+    botaoEnviar.addEventListener("click", proximaPergunta)
+
+    if (pergunta === 10) {
+        botaoEnviar.innerText = "finalizar"
+        botaoEnviar.addEventListener("click", finalizar)
+    } else {
+        botaoEnviar.addEventListener("click", proximaPergunta)
+    }
+
     if(resposta === quiz.questions[pergunta-1].answer){
         document.querySelector(`label[for='${idInputResposta}']`).setAttribute("id", "correta")
         pontos = pontos + 1
@@ -100,21 +112,38 @@ function validarResposta(){
         document.querySelector(`label[for='${idInputResposta}']`).setAttribute("id", "errada")
         document.querySelector(`label[for='${respostaCorretaId}']`).setAttribute("id", "correta")
     }
+
+    pergunta = pergunta + 1
 }
+
+function finalizar(){
+    localStorage.setItem("pontos", pontos)
+
+    window.location.href = "../resultado/resultado.html"
+}
+
+function proximaPergunta(){
+    montarPergunta()
+    adicionarEventoInputs()
+}
+
+function adicionarEventoInputs(){
+    const inputResposta = document.querySelectorAll(".alternativas input")
+    inputResposta.forEach(input => {
+        input.addEventListener("click", guardarResposta)
+        
+        if (input.value === quiz.questions[pergunta-1].answer) {
+            respostaCorretaId = input.id
+        }
+    })
+}
+
 
 async function iniciar(){
     alternarAssunto()
     await buscarPerguntas()
     montarPergunta()
-
-    const inputResposta = document.querySelectorAll(".alternativas input")
-    inputResposta.forEach(input => {
-        input.addEventListener("click", guardarResposta)
-
-        if (input.value === quiz.questions[pergunta-1].answer) {
-            respostaCorretaId = input.id
-        }
-    })
+    adicionarEventoInputs()
 }
 
 iniciar()
